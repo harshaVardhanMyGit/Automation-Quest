@@ -1,0 +1,21 @@
+[
+  {
+    "name": "Product Defects",
+    "matchedStatuses": ["failed"],
+    "messageRegex": ".*Expected.*"
+  },
+  {
+    "name": "Test Infrastructure",
+    "matchedStatuses": ["broken"],
+    "messageRegex": ".*timeout.*|.*navigation.*|.*net::ERR.*"
+  },
+  {
+    "name": "Self-Healed Tests",
+    "matchedStatuses": ["passed"],
+    "messageRegex": ".*Self-healed.*"
+  },
+  {
+    "name": "Skipped / Ignored",
+    "matchedStatuses": ["skipped"]
+  }
+]

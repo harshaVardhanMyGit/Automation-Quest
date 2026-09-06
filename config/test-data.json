@@ -1,0 +1,35 @@
+{
+  "webTests": {
+    "searchQueries": ["test query 1", "test query 2", "edge case !@#$"],
+    "formData": [
+      {
+        "name": "Test User",
+        "email": "test@example.com",
+        "phone": "1234567890"
+      },
+      {
+        "name": "Jane Doe",
+        "email": "jane@example.com",
+        "phone": "0987654321"
+      }
+    ]
+  },
+  "apiTests": {
+    "validPayload": {
+      "name": "Automation Item",
+      "description": "Created by TestAutothon framework",
+      "value": 42
+    },
+    "invalidPayload": {},
+    "updatePayload": {
+      "name": "Updated Item",
+      "description": "Modified by automation"
+    }
+  },
+  "mobileTests": {
+    "loginCredentials": {
+      "username": "testuser",
+      "password": "testpass"
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "global": {
+    "maxResponseTimeMs": 2000,
+    "maxP95ResponseTimeMs": 3000,
+    "maxP99ResponseTimeMs": 5000,
+    "maxErrorRatePercent": 1
+  },
+  "endpoints": {
+    "GET /api/items": {
+      "maxResponseTimeMs": 500,
+      "description": "Item listing should be fast"
+    },
+    "POST /api/items": {
+      "maxResponseTimeMs": 1000,
+      "description": "Item creation with DB write"
+    },
+    "GET /api/items/:id": {
+      "maxResponseTimeMs": 300,
+      "description": "Single item lookup by ID"
+    },
+    "PUT /api/items/:id": {
+      "maxResponseTimeMs": 1000,
+      "description": "Item update"
+    },
+    "DELETE /api/items/:id": {
+      "maxResponseTimeMs": 800,
+      "description": "Item deletion"
+    }
+  },
+  "loadTest": {
+    "concurrentUsers": 10,
+    "durationSeconds": 30,
+    "rampUpSeconds": 5,
+    "maxAvgResponseTimeMs": 1500,
+    "minRequestsPerSecond": 5
+  }
+}

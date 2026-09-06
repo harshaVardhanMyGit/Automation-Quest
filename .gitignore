@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.env
+playwright-report/
+allure-results/
+allure-report/
+test-results/
+reports/screenshots/
+reports/logs/
+reports/*.json
+reports/*.html
+*.tsbuildinfo
