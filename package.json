@@ -15,14 +15,19 @@
     "test:a11y": "npx playwright test --grep @a11y",
     "test:perf": "npx playwright test --grep @perf",
     "test:parallel": "npx playwright test --workers=4",
+    "test:gajab:full": "npx playwright test src/tests/specs/gajab-full-flow.spec.ts --project=chromium --workers=1",
+    "typecheck": "tsc --noEmit",
     "report": "npx allure generate allure-results --clean -o allure-report && npx allure open allure-report",
     "report:generate": "npx allure generate allure-results --clean -o allure-report",
-    "notify": "ts-node src/notifications/send-report.ts",
+    "notify": "ts-node src/notifications/send-email-report.ts",
     "notify:teams": "ts-node src/notifications/send-teams-report.ts",
     "notify:all": "npm run notify && npm run notify:teams",
     "ai:generate-tests": "ts-node src/ai/test-generator.ts",
     "ai:analyze-failures": "ts-node src/ai/failure-analyzer.ts",
     "ai:generate-bug-report": "ts-node src/ai/bug-report-generator.ts"
+  },
+  "engines": {
+    "node": ">=20"
   },
   "dependencies": {
     "@playwright/test": "^1.45.0",

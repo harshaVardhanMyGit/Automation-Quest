@@ -26,9 +26,7 @@ export class SelfHealer {
 
   async heal(page: Page, failedLocator: string): Promise<string | null> {
     try {
-      const domSnippet = await page.evaluate(() => {
-        return document.body.innerHTML.substring(0, 5000);
-      });
+      const domSnippet = (await page.content()).substring(0, 5000);
 
       const response = await this.ai.prompt(
         `Failed locator: "${failedLocator}"\n\nDOM snippet:\n${domSnippet}`,

@@ -3,6 +3,21 @@ import * as dotenv from 'dotenv';
 
 dotenv.config();
 
+function getAppiumServer(): string {
+  const explicitServer = process.env.APPIUM_SERVER;
+  if (explicitServer) {
+    return explicitServer;
+  }
+
+  const host = process.env.APPIUM_HOST;
+  const port = process.env.APPIUM_PORT || '4723';
+  if (host) {
+    return `http://${host}:${port}`;
+  }
+
+  return 'http://127.0.0.1:4723';
+}
+
 export interface AppiumConfig {
   appiumServer: string;
   platformName: string;
@@ -13,11 +28,11 @@ export interface AppiumConfig {
 
 function getDefaultConfig(): AppiumConfig {
   return {
-    appiumServer: process.env.APPIUM_SERVER || 'http://127.0.0.1:4723',
-    platformName: process.env.MOBILE_PLATFORM || 'Android',
+    appiumServer: getAppiumServer(),
+    platformName: process.env.MOBILE_PLATFORM || process.env.PLATFORM_NAME || 'Android',
     deviceName: process.env.DEVICE_NAME || 'emulator-5554',
     app: process.env.APK_PATH || '',
-    automationName: 'UiAutomator2',
+    automationName: process.env.AUTOMATION_NAME || 'UiAutomator2',
   };
 }
 

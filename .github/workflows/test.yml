@@ -10,6 +10,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      RUN_LIVE_TESTS: ${{ vars.RUN_LIVE_TESTS || 'false' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -25,7 +27,11 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
 
+      - name: Run TypeScript typecheck
+        run: npm run typecheck
+
       - name: Run Playwright tests
+        if: ${{ env.RUN_LIVE_TESTS == 'true' }}
         run: npx playwright test --project=chromium
 
       - name: Prepare Allure config

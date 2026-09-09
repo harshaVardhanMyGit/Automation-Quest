@@ -5,6 +5,11 @@ import * as dotenv from 'dotenv';
 
 dotenv.config();
 
+function getRecipientList(): string[] {
+  const rawRecipients = process.env.EMAIL_RECIPIENTS || process.env.EMAIL_TO || '';
+  return rawRecipients.split(',').map((recipient) => recipient.trim()).filter(Boolean);
+}
+
 interface EmailConfig {
   host: string;
   port: number;
@@ -166,10 +171,10 @@ export function parsePlaywrightResults(resultsPath: string): TestSummary {
 
 if (require.main === module) {
   const resultsFile = process.argv[2] || 'test-results.json';
-  const recipientList = (process.env.EMAIL_RECIPIENTS || '').split(',').filter(Boolean);
+  const recipientList = getRecipientList();
 
   if (recipientList.length === 0) {
-    console.log('Set EMAIL_RECIPIENTS in .env (comma-separated)');
+    console.log('Set EMAIL_RECIPIENTS in .env (comma-separated). EMAIL_TO is also accepted for backward compatibility.');
     process.exit(1);
   }
 

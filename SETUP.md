@@ -105,9 +105,11 @@ ANTHROPIC_API_KEY=sk-ant-...
 SMTP_HOST=smtp.gmail.com        # for email notifications
 SMTP_USER=your-email
 SMTP_PASS=your-app-password
+EMAIL_RECIPIENTS=team@example.com
 TEAMS_WEBHOOK_URL=https://...   # for MS Teams notifications
-APPIUM_HOST=localhost            # for mobile testing
-APPIUM_PORT=4723
+APPIUM_SERVER=http://127.0.0.1:4723
+MOBILE_PLATFORM=Android
+AUTOMATION_NAME=UiAutomator2
 ```
 
 | Variable | Required | Purpose |
@@ -116,9 +118,9 @@ APPIUM_PORT=4723
 | `AI_PROVIDER` | For AI features | `openai` or `anthropic` |
 | `OPENAI_API_KEY` | For AI (OpenAI) | GPT-4o API key |
 | `ANTHROPIC_API_KEY` | For AI (Anthropic) | Claude API key |
-| `SMTP_HOST` / `SMTP_USER` / `SMTP_PASS` | For email reports | SMTP server credentials |
+| `SMTP_HOST` / `SMTP_USER` / `SMTP_PASS` / `EMAIL_RECIPIENTS` | For email reports | SMTP server credentials and recipients |
 | `TEAMS_WEBHOOK_URL` | For Teams reports | MS Teams incoming webhook URL |
-| `APPIUM_HOST` / `APPIUM_PORT` | For mobile tests | Appium server connection |
+| `APPIUM_SERVER` / `MOBILE_PLATFORM` / `AUTOMATION_NAME` | For mobile tests | Appium server and device automation settings |
 
 ---
 
