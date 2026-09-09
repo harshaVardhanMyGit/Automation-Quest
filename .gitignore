@@ -10,3 +10,9 @@ reports/logs/
 reports/*.json
 reports/*.html
 *.tsbuildinfo
+challenge/active/
+TestAutothon2026_Participants.pdf
+reports/*.zip
+reports/*.md
+sample-challenge/reports/
+complex-challenge/reports/

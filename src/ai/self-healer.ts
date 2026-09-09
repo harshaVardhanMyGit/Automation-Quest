@@ -1,5 +1,6 @@
 import { Page } from '@playwright/test';
 import { AIClient } from './ai-client';
+import { sanitizeForAI } from '../utils/sanitize';
 
 const SYSTEM_PROMPT = `You are a Playwright automation expert. Given an HTML DOM snippet and a failed CSS/XPath locator, suggest alternative locators that would work. Return a JSON array of alternative locators, ordered by reliability:
 
@@ -19,6 +20,7 @@ export interface HealingSuggestion {
 export class SelfHealer {
   private ai: AIClient;
   private healingLog: { original: string; healed: string; timestamp: string }[] = [];
+  private minimumConfidence = Number(process.env.HEALING_MIN_CONFIDENCE || '0.7');
 
   constructor() {
     this.ai = new AIClient();
@@ -26,12 +28,10 @@ export class SelfHealer {
 
   async heal(page: Page, failedLocator: string): Promise<string | null> {
     try {
-      const domSnippet = await page.evaluate(() => {
-        return document.body.innerHTML.substring(0, 5000);
-      });
+      const domSnippet = sanitizeForAI(await page.evaluate(() => document.body.innerHTML), 5000);
 
       const response = await this.ai.prompt(
-        `Failed locator: "${failedLocator}"\n\nDOM snippet:\n${domSnippet}`,
+        `Failed locator: "${sanitizeForAI(failedLocator, 500)}"\n\nDOM snippet:\n${domSnippet}`,
         SYSTEM_PROMPT
       );
 
@@ -42,9 +42,10 @@ export class SelfHealer {
 
       for (const suggestion of suggestions) {
         try {
+          if (suggestion.confidence < this.minimumConfidence) continue;
           const locator = suggestion.locator.replace(/^(css|xpath)=/, '');
           const element = page.locator(locator);
-          if (await element.isVisible({ timeout: 2000 })) {
+          if (await element.count() === 1 && await element.isVisible({ timeout: 2000 })) {
             this.healingLog.push({
               original: failedLocator,
               healed: locator,

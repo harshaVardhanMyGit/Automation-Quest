@@ -1,7 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
-  testDir: './src/tests/specs',
+  testDir: process.env.PLAYWRIGHT_TEST_DIR || './src/tests/specs',
   fullyParallel: true,
   retries: 1,
   workers: 4,
@@ -23,18 +23,27 @@ export default defineConfig({
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
+      testIgnore: /(?:sample-api|api-performance)\.spec\.ts/,
     },
     {
       name: 'firefox',
       use: { ...devices['Desktop Firefox'] },
+      testIgnore: /(?:sample-api|api-performance)\.spec\.ts/,
     },
     {
       name: 'msedge',
       use: { ...devices['Desktop Edge'], channel: 'msedge' },
+      testIgnore: /(?:sample-api|api-performance)\.spec\.ts/,
     },
     {
       name: 'mobile-chrome',
       use: { ...devices['Pixel 7'] },
+      testIgnore: /(?:sample-api|api-performance)\.spec\.ts/,
+    },
+    {
+      name: 'api',
+      testMatch: /(?:sample-api|api-performance)\.spec\.ts/,
+      use: {},
     },
   ],
 });

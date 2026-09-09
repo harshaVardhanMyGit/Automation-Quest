@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { BasePage } from '../../pages/BasePage';
 import { DataScraper } from '../../utils/data-scraper';
 
-test.describe('Web Application Tests', () => {
+test.describe('Web Application Tests @ui', () => {
   let basePage: BasePage;
 
   test.beforeEach(async ({ page }) => {

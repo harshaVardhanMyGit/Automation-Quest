@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { ApiClient } from '../../api/ApiClient';
 
-test.describe('API Tests', () => {
+test.describe('API Tests @api', () => {
   let apiClient: ApiClient;
 
   test.beforeAll(async () => {

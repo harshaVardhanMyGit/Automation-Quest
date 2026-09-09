@@ -29,6 +29,10 @@ export class AIClient {
     }
   }
 
+  isConfigured(): boolean {
+    return this.provider === 'anthropic' ? this.anthropic !== null : this.openai !== null;
+  }
+
   async prompt(userMessage: string, systemPrompt?: string): Promise<AIResponse> {
     if (this.provider === 'anthropic' && this.anthropic) {
       return this.promptClaude(userMessage, systemPrompt);

@@ -1,5 +1,6 @@
 import { AIClient } from './ai-client';
 import * as fs from 'fs';
+import { sanitizeForAI } from '../utils/sanitize';
 
 const SYSTEM_PROMPT = `You are a test failure analysis expert. Given test failure details (error message, stack trace, screenshot description, test name), provide:
 
@@ -30,10 +31,10 @@ export async function analyzeFailure(
   const ai = new AIClient();
 
   const prompt = `Analyze this test failure:
-**Test**: ${testName}
-**URL**: ${pageUrl || 'N/A'}
-**Error**: ${errorMessage}
-**Stack Trace**: ${stackTrace}`;
+**Test**: ${sanitizeForAI(testName, 500)}
+**URL**: ${sanitizeForAI(pageUrl || 'N/A', 1000)}
+**Error**: ${sanitizeForAI(errorMessage, 4000)}
+**Stack Trace**: ${sanitizeForAI(stackTrace, 8000)}`;
 
   const response = await ai.prompt(prompt, SYSTEM_PROMPT);
 

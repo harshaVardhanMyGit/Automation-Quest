@@ -1,6 +1,8 @@
 import { AIClient } from './ai-client';
 import * as fs from 'fs';
 import * as path from 'path';
+import { buildChallengePlan, writeChallengeArtifacts } from '../challenge/bootstrap';
+import { sanitizeForAI } from '../utils/sanitize';
 
 const SYSTEM_PROMPT = `You are a senior test automation engineer. Given a problem statement for a hackathon, generate:
 1. A list of test scenarios (happy path + edge cases)
@@ -17,7 +19,16 @@ Output format:
 
 export async function generateTestsFromProblemStatement(problemStatement: string): Promise<string> {
   const ai = new AIClient();
-  const response = await ai.prompt(problemStatement, SYSTEM_PROMPT);
+  if (!ai.isConfigured()) {
+    const plan = buildChallengePlan(problemStatement, 'inline-problem-statement');
+    const outputDir = path.join(process.cwd(), 'challenge', 'active');
+    writeChallengeArtifacts(plan, outputDir);
+    const fallback = JSON.stringify(plan, null, 2);
+    console.log(`No AI provider configured. Deterministic challenge plan written to ${outputDir}`);
+    return fallback;
+  }
+
+  const response = await ai.prompt(sanitizeForAI(problemStatement, 20000), SYSTEM_PROMPT);
 
   const outputDir = path.join(process.cwd(), 'src', 'tests', 'generated');
   if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir, { recursive: true });

@@ -3,7 +3,7 @@
     "baseUrl": ".",
     "target": "ES2022",
     "module": "commonjs",
-    "lib": ["ES2022"],
+    "lib": ["ES2022", "DOM"],
     "outDir": "./dist",
     "strict": true,
     "esModuleInterop": true,

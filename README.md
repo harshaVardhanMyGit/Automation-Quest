@@ -134,6 +134,50 @@ Configured in `playwright.config.ts` with 4 browser projects:
 
 ### CI/CD
 
+### Event-Day Challenge Bootstrap
+
+The framework includes an offline-first planner for the live problem statement. It turns a Markdown or text statement into a structured plan, reusable scenario checklist, traceability matrix, and runbook without requiring an AI key.
+
+```bash
+npm run challenge:init -- path/to/problem-statement.md
+npm run challenge:validate
+npm run challenge:preflight
+npm run challenge:smoke
+npm run challenge:summary
+npm run challenge:package
+```
+
+The default output is `challenge/active/`:
+
+- `challenge-plan.json` - inferred scope, requirements, and scenarios
+- `requirements.json` - prioritized requirements with matched source evidence
+- `scenarios.json` - implementation-ready acceptance scenarios
+- `implementation-plan.md` - reusable UI/API/mobile test-file recommendations and assertions
+- `generated/` - executable UI/API smoke scaffolds to adapt during the challenge
+- `presentation-summary.md` - jury demo order, coverage matrix, evidence checklist, and limitations
+- `traceability.md` - requirement-to-scenario matrix for the jury presentation
+- `RUNBOOK.md` - event-day execution checklist
+
+The planner is deliberately deterministic. Use its output as the contract for implementation, adapt the generated scaffolds, run `npm run challenge:smoke`, then expand to the normal browser matrix and attach traces, screenshots, reports, and generated bug reports. The `ai:generate-tests` command automatically uses this planner when no AI provider key is configured.
+
+Run `npm run challenge:preflight` before execution to check the inferred scope, required target variables, and Chromium installation.
+
+### Reproducible Sample Challenge
+
+The repository includes a local Inventory Control challenge under `sample-challenge/`. It exercises API CRUD, invalid payload handling, UI search, form submission, accessibility-oriented selectors, and desktop/mobile execution without external services.
+
+```bash
+npm run sample:challenge
+```
+
+The sample target is intentionally simple but real: it exposes HTTP endpoints, serves a browser UI, shares state across workers, and produces normal Playwright screenshots, traces, and HTML results. Use it to validate framework changes before the event.
+
+For a more complex rehearsal, run `npm run complex:challenge`. It covers authentication, role-based authorization, stock-conflict handling, supervisor operations, UI session state, mobile execution, and an API response-time assertion. Generate its factual result summary with `npm run complex:challenge:summary`.
+
+After a run, `challenge:summary` creates factual JSON and Markdown result summaries from Playwright's JSON reporter. `challenge:package` adds the summary, HTML report, traces, and result artifacts to a ZIP archive for the jury.
+
+Self-healing only accepts a unique visible locator whose model confidence meets `HEALING_MIN_CONFIDENCE` (default `0.7`). Keep healing evidence in the report and verify the resulting business assertion; healing should recover locator drift, not hide behavior regressions.
+
 GitHub Actions workflow (`.github/workflows/test.yml`):
 1. Checks out code
 2. Sets up Node.js 20
