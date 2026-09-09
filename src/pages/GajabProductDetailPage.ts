@@ -29,15 +29,19 @@ export class GajabProductDetailPage extends BasePage {
 
   async waitForProductPage(): Promise<void> {
     await expect(this.page).toHaveURL(/\/product-detail\//);
-    await expect(this.page.locator(this.selectors.productHeading)).toBeVisible();
+    // Wait for page to fully load
+    await this.page.waitForLoadState('networkidle').catch(() => undefined);
+    await expect(this.page.locator(this.selectors.productHeading)).toBeVisible({ timeout: 30000 });
   }
 
   async getOfferSnapshot(): Promise<ProductOfferSnapshot> {
     await this.waitForProductPage();
 
     const productName = ((await this.page.locator(this.selectors.productHeading).textContent()) || '').trim();
+    
+    // Get brand name without requiring visibility (element might be hidden but in DOM)
     const soldByLink = this.page.locator(this.selectors.soldByLink).first();
-    const brandName = ((await soldByLink.textContent()) || '').trim();
+    const brandName = ((await soldByLink.textContent().catch(() => '')) || '').trim();
 
     const hasRetryPayment = await this.page.locator(this.selectors.retryPaymentButton).isVisible().catch(() => false);
     const hasBoughtBanner = await this.page.locator(this.selectors.boughtBanner).isVisible().catch(() => false);

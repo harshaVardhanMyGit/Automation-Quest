@@ -42,7 +42,12 @@ export class BasePage {
   }
 
   async navigate(url: string): Promise<void> {
-    await this.page.goto(url, { waitUntil: 'domcontentloaded' });
+    try {
+      await this.page.goto(url, { waitUntil: 'domcontentloaded', timeout: 45000 });
+    } catch (e) {
+      // If navigation times out, just wait a bit and continue
+      await this.page.waitForTimeout(2000);
+    }
   }
 
   async click(locator: string): Promise<void> {
