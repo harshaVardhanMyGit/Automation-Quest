@@ -4,8 +4,8 @@
 
 set -e
 
-BASE_URL=${1:-"https://example.com"}
-API_URL=${2:-"https://api.example.com"}
+BASE_URL=${1:-"https://stg.gajab.com/"}
+API_URL=${2:-"https://stg.gajab.com/"}
 
 echo "=== TestAutothon Quick Setup ==="
 

@@ -14,7 +14,7 @@ Given('the user navigates to the application', async function () {
   const context = await browser.newContext();
   page = await context.newPage();
   basePage = new BasePage(page);
-  await basePage.navigate(process.env.BASE_URL || 'https://example.com');
+  await basePage.navigate(process.env.BASE_URL || 'https://stg.gajab.com/');
 });
 
 Then('the page title should be displayed', async function () {

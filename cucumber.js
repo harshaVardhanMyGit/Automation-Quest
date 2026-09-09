@@ -1,3 +1,5 @@
+require('dotenv/config');
+
 module.exports = {
   default: {
     paths: ['src/tests/features/**/*.feature'],

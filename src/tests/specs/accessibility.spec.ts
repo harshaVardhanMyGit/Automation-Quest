@@ -3,7 +3,7 @@ import { runAccessibilityAudit, assertNoA11yViolations } from '../../utils/acces
 
 test.describe('Accessibility Tests @a11y', () => {
   test('homepage should have no critical accessibility violations', async ({ page }) => {
-    await page.goto(process.env.BASE_URL || 'https://example.com');
+    await page.goto(process.env.BASE_URL || 'https://stg.gajab.com/');
 
     const result = await runAccessibilityAudit(page, {
       tags: ['wcag2a', 'wcag2aa'],
@@ -18,7 +18,7 @@ test.describe('Accessibility Tests @a11y', () => {
   });
 
   test('page should have proper heading structure', async ({ page }) => {
-    await page.goto(process.env.BASE_URL || 'https://example.com');
+    await page.goto(process.env.BASE_URL || 'https://stg.gajab.com/');
 
     const h1Count = await page.locator('h1').count();
     expect(h1Count).toBeGreaterThanOrEqual(1);
@@ -32,7 +32,7 @@ test.describe('Accessibility Tests @a11y', () => {
   });
 
   test('interactive elements should be keyboard accessible', async ({ page }) => {
-    await page.goto(process.env.BASE_URL || 'https://example.com');
+    await page.goto(process.env.BASE_URL || 'https://stg.gajab.com/');
 
     const result = await runAccessibilityAudit(page, {
       tags: ['wcag2a'],

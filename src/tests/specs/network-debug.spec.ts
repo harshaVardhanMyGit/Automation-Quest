@@ -15,7 +15,7 @@ test.describe('Network Monitoring @debug', () => {
   });
 
   test('should capture all network requests and detect failures', async ({ page }) => {
-    await page.goto(process.env.BASE_URL || 'https://example.com');
+    await page.goto(process.env.BASE_URL || 'https://stg.gajab.com/');
 
     const report = await interceptor.getFullReport(page);
 
@@ -28,7 +28,7 @@ test.describe('Network Monitoring @debug', () => {
   });
 
   test('should flag slow network requests', async ({ page }) => {
-    await page.goto(process.env.BASE_URL || 'https://example.com');
+    await page.goto(process.env.BASE_URL || 'https://stg.gajab.com/');
 
     const slowRequests = interceptor.getSlowRequests(3000);
     if (slowRequests.length > 0) {
@@ -42,7 +42,7 @@ test.describe('Network Monitoring @debug', () => {
   });
 
   test('should collect browser performance metrics', async ({ page }) => {
-    await page.goto(process.env.BASE_URL || 'https://example.com', { waitUntil: 'load' });
+    await page.goto(process.env.BASE_URL || 'https://stg.gajab.com/', { waitUntil: 'load' });
 
     const metrics = await interceptor.getPerformanceMetrics(page);
 
