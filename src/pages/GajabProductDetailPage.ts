@@ -65,15 +65,15 @@ export class GajabProductDetailPage extends BasePage {
   }
 
   getRetryPaymentButton(): Locator {
-    return this.page.locator(this.selectors.retryPaymentButton);
+    return this.page.locator(this.selectors.retryPaymentButton).first();
   }
 
   getStartBargainingButton(): Locator {
-    return this.page.locator(this.selectors.startBargainingButton);
+    return this.page.locator(this.selectors.startBargainingButton).first();
   }
 
   getBuyNowButton(): Locator {
-    return this.page.locator(this.selectors.buyNowButton);
+    return this.page.locator(this.selectors.buyNowButton).first();
   }
 
   async openSupportForPlacedOrder(): Promise<void> {
