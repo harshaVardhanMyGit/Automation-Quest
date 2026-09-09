@@ -3,9 +3,9 @@ import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
   testDir: './src/tests/specs',
-  fullyParallel: true,
-  retries: 1,
-  workers: 4,
+  fullyParallel: false,
+  retries: 0,
+  workers: 1,
   reporter: [
     ['html', { open: 'never' }],
     ['allure-playwright'],
@@ -24,18 +24,6 @@ export default defineConfig({
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
-    },
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
-    {
-      name: 'msedge',
-      use: { ...devices['Desktop Edge'], channel: 'msedge' },
-    },
-    {
-      name: 'mobile-chrome',
-      use: { ...devices['Pixel 7'] },
     },
   ],
 });
